@@ -1,0 +1,12 @@
+#!/bin/sh
+
+HOSTNAME=`cat /etc/hostname`
+
+service rsyslog start
+service postgresql start
+
+sudo -u postgres psql -tc "SELECT 1 FROM pg_user WHERE usename = 'root'" | grep -q 1 || sudo -u postgresql psql -c "CREATE ROLE root;"
+
+if [ -n $1 ]; then
+	$@
+fi

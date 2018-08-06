@@ -1,0 +1,8 @@
+
+dvim() {
+	docker run -it --dns=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' platform-dns` --volume=/home/jani/platform-shared:/platform-shared --volume=`pwd`:/sources devel /bin/bash -c "stty rows $(tput lines) cols $(tput cols) && cd /sources && /setup/start && TERM=rxvt-unicode /usr/bin/vim $*"
+}
+
+dgo() {
+	docker run -it --dns=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' platform-dns` --volume=/home/jani/platform-shared:/platform-shared --volume=/home/jani/go:/go --volume=/home/jani/workspace/environment/mailer/mailer/deliverability-mailer:/go/src/deliverability-mailer devel /bin/bash -c "stty rows $(tput lines) cols $(tput cols) && cd /go && /setup/start && TERM=rxvt-unicode /usr/bin/vim $*"
+}
