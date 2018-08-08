@@ -30,8 +30,10 @@ COPY bashrc /root/.bashrc
 COPY vim /root/.vim
 
 ENV GOPATH /go
-#RUN vim -c 'GoUpdateBinaries' -c 'q'
-RUN vim -c 'helptags ALL' -c 'q'
+ENV GOROOT /usr/lib/go-1.8
+ENV PATH "${PATH}:${GOROOT}/bin"
+
+RUN vim -c 'silent GoUpdateBinaries' -c 'silent helptags ALL' -c 'q'
 
 ENV LANG en_US.UTF-8 
 
