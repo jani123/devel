@@ -1,5 +1,5 @@
 FROM debian:stretch
-MAINTAINER Jani Hast <jani.hast@viidakko.fi>
+MAINTAINER Jani Hast
 
 # Install packages
 RUN apt-get -yy update && \
