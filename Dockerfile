@@ -2,9 +2,10 @@ FROM debian:stretch
 MAINTAINER Jani Hast
 
 # Install packages
-RUN apt-get -yy update && \
+RUN echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/backports.list && \
+    apt-get -yy update && \
 	apt-get -yy upgrade && \
-	apt-get -yy install curl vim perl php7.0-cli git gnupg sudo golang-1.8 golang-1.8-doc golang-1.8-go golang-1.8-src
+	apt-get -yy install curl vim perl php7.0-cli git gnupg sudo golang-1.10 golang-1.10-doc golang-1.10-go golang-1.10-src
 
 # Install Postgresql
 RUN curl -sL https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add - && echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
@@ -26,11 +27,10 @@ RUN apt-get -qq -y install locales && \
 
 COPY setup/* /setup/
 COPY vimrc /root/.vimrc
-COPY bashrc /root/.bashrc
 COPY vim /root/.vim
 
 ENV GOPATH /go
-ENV GOROOT /usr/lib/go-1.8
+ENV GOROOT /usr/lib/go-1.10
 ENV PATH "${PATH}:${GOROOT}/bin"
 
 RUN vim -c 'silent GoUpdateBinaries' -c 'silent helptags ALL' -c 'q'
